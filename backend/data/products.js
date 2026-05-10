@@ -1,0 +1,85 @@
+const products = [
+  {
+    title: 'Smartphone X12',
+    description: 'A fast and sleek mobile phone with a vibrant OLED screen and powerful camera.',
+    price: 799,
+    category: 'mobile',
+    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80',
+    stock: 25,
+  },
+  {
+    title: 'Pocket Phone Pro',
+    description: 'Compact mobile with long battery life, perfect for everyday use.',
+    price: 499,
+    category: 'mobile',
+    image: 'https://images.unsplash.com/photo-1512499617640-c2f9991682ae?auto=format&fit=crop&w=600&q=80',
+    stock: 32,
+  },
+  {
+    title: 'Noise Cancelling Headphones',
+    description: 'Wireless headphones with active noise cancellation and rich sound.',
+    price: 149,
+    category: 'electronics',
+    image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80',
+    stock: 42,
+  },
+  {
+    title: 'Smart Home Speaker',
+    description: 'Voice-controlled smart speaker for music, alarms, and home automation.',
+    price: 129,
+    category: 'electronics',
+    image: 'https://images.unsplash.com/photo-1580894742127-d35f88934f0b?auto=format&fit=crop&w=600&q=80',
+    stock: 18,
+  },
+  {
+    title: 'Denim Jacket',
+    description: 'Classic blue denim jacket with a relaxed fit and durable stitching.',
+    price: 79,
+    category: 'clothing',
+    image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=600&q=80',
+    stock: 50,
+  },
+  {
+    title: 'Running Shoes',
+    description: 'Lightweight running shoes designed for comfort and performance.',
+    price: 95,
+    category: 'clothing',
+    image: 'https://images.unsplash.com/photo-1519741499781-4c33f1ff82a5?auto=format&fit=crop&w=600&q=80',
+    stock: 30,
+  },
+  {
+    title: 'Bestseller Novel',
+    description: 'A gripping fiction novel with unforgettable characters and drama.',
+    price: 18,
+    category: 'books',
+    image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80',
+    stock: 120,
+  },
+  {
+    title: 'Cookbook Deluxe',
+    description: 'Delicious recipes for home cooking with beautiful photography.',
+    price: 25,
+    category: 'books',
+    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80',
+    stock: 80,
+  },
+  {
+    title: 'Ceramic Coffee Maker',
+    description: 'Stylish home coffee maker for brewing strong, aromatic coffee.',
+    price: 65,
+    category: 'home',
+    image: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=600&q=80',
+    stock: 27,
+  },
+  {
+    title: 'Indoor Plant Set',
+    description: 'A beautiful set of low-maintenance houseplants for decorating any room.',
+    price: 45,
+    category: 'home',
+    image: 'https://images.unsplash.com/photo-1493666438817-866a91353ca9?auto=format&fit=crop&w=600&q=80',
+    stock: 60,
+  }
+];
+
+export default products;
+

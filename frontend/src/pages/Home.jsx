@@ -18,6 +18,23 @@ export default function Home() {
     loadProducts();
   }, [search, category]);
 
+  const addToCart = async (productId) => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      alert('Please log in to add items to your cart.');
+      return;
+    }
+
+    try {
+      const response = await api.post('/cart/add', { userId, productId });
+      const total = response.data.cart.items.reduce((total, item) => total + item.product.price * item.quantity, 0);
+      localStorage.setItem('cartTotal', total);
+      window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { total } }));
+    } catch (error) {
+      alert('Failed to add item to cart');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -44,29 +61,36 @@ export default function Home() {
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((product) => (
-            <Link
-              to={`/product/${product._id}`}
+            <div
               key={product._id}
               className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
             >
-              <div className="overflow-hidden">
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="h-60 w-full object-cover transition duration-200 hover:scale-105"
-                />
-              </div>
-              <div className="space-y-3 p-5">
-                <h3 className="text-lg font-semibold text-slate-900">{product.title}</h3>
-                <p className="text-sm text-gray-500">{product.category}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-xl font-bold text-slate-900">${product.price}</span>
-                  <span className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
-                    Buy now
-                  </span>
+              <Link to={`/product/${product._id}`}>
+                <div className="overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="h-60 w-full object-cover transition duration-200 hover:scale-105"
+                  />
                 </div>
-              </div>
-            </Link>
+                <div className="space-y-3 p-5">
+                  <h3 className="text-lg font-semibold text-slate-900">{product.title}</h3>
+                  <p className="text-sm text-gray-500">{product.category}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xl font-bold text-slate-900">${product.price}</span>
+                    <span className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
+                      View Details
+                    </span>
+                  </div>
+                </div>
+              </Link>
+              <button 
+                onClick={() => addToCart(product._id)} 
+                className='w-full bg-blue-500 text-white py-2 px-4 hover:bg-blue-600 transition duration-200 font-semibold'
+              >
+                Add to Cart
+              </button>
+            </div>
           ))}
         </div>
       </div>
