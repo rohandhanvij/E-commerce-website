@@ -26,8 +26,8 @@ export default function Home() {
     }
 
     try {
-      const response = await api.post('/cart/add', { userId, productId });
-      const total = response.data.cart.items.reduce((total, item) => total + item.product.price * item.quantity, 0);
+      const response = await api.post('/cart/add', { userid: userId, productID: productId });
+      const total = response.data.cart.items.reduce((total, item) => total + item.quantity, 0);
       localStorage.setItem('cartTotal', total);
       window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { total } }));
     } catch (error) {

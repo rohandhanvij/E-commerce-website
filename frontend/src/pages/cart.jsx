@@ -24,7 +24,7 @@ export default function Cart() {
 
     const removeItem = async (productId) => {
         try {
-            await api.post(`/cart/remove`, { userid, productId });
+            await api.post(`/cart/remove`, { userid, productID: productId });
             loadCart();
             window.dispatchEvent(new Event('cartUpdated'));
         } catch (error) {
@@ -40,7 +40,7 @@ export default function Cart() {
         }
 
         try {
-            await api.post(`/cart/update`, { userid, productId, quantity });
+            await api.post(`/cart/update`, { userid, productID: productId, quantity });
             loadCart();
             window.dispatchEvent(new Event('cartUpdated'));
         } catch (error) {
@@ -66,7 +66,7 @@ export default function Cart() {
         );
     }
 
-    const totalPrice = cart.items.reduce((total, item) => total + item.product.price * item.quantity, 0);
+    const totalPrice = cart.items.reduce((total, item) => total + (item.productID?.price || 0) * item.quantity, 0);
 
     return (
         <div className="max-w-4xl mx-auto p-6">
@@ -74,32 +74,32 @@ export default function Cart() {
 
             <div className="space-y-4">
                 {cart.items.map((item) => (
-                    <div key={item.product._id} className="flex items-center justify-between gap-4 border-b border-gray-200 pb-4">
+                    <div key={item.productID?._id || item.productID} className="flex items-center justify-between gap-4 border-b border-gray-200 pb-4">
                         <div className="flex items-center gap-4 flex-1">
-                            <img src={item.product.image} alt={item.product.title} className="w-20 h-20 object-cover rounded" />
+                            <img src={item.productID?.image} alt={item.productID?.title} className="w-20 h-20 object-cover rounded" />
                             <div>
-                                <h2 className="text-lg font-semibold">{item.product.title}</h2>
-                                <p className="text-gray-600">${item.product.price.toFixed(2)}</p>
+                                <h2 className="text-lg font-semibold">{item.productID?.title}</h2>
+                                <p className="text-gray-600">${(item.productID?.price || 0).toFixed(2)}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
                             <button
-                                onClick={() => updateQTY(item.product._id, item.quantity - 1)}
+                                onClick={() => updateQTY(item.productID?._id || item.productID, item.quantity - 1)}
                                 className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
                             >
                                 −
                             </button>
                             <span className="w-8 text-center font-semibold">{item.quantity}</span>
                             <button
-                                onClick={() => updateQTY(item.product._id, item.quantity + 1)}
+                                onClick={() => updateQTY(item.productID?._id || item.productID, item.quantity + 1)}
                                 className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
                             >
                                 +
                             </button>
                         </div>
-                        <p className="font-semibold w-24 text-right">${(item.product.price * item.quantity).toFixed(2)}</p>
+                        <p className="font-semibold w-24 text-right">${((item.productID?.price || 0) * item.quantity).toFixed(2)}</p>
                         <button
-                            onClick={() => removeItem(item.product._id)}
+                            onClick={() => removeItem(item.productID?._id || item.productID)}
                             className="px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600"
                         >
                             Remove

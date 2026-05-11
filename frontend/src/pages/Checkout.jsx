@@ -62,7 +62,7 @@ export default function Checkout() {
     );
   }
 
-  const total = cart.items?.reduce((sum, item) => sum + item.quantity * item.product.price, 0) ?? 0;
+  const total = cart.items?.reduce((sum, item) => sum + item.quantity * (item.productID?.price || 0), 0) ?? 0;
 
   return (
     <div className="max-w-4xl mx-auto p-6">

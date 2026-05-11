@@ -16,7 +16,7 @@ dotenv.config();
 // express got renamed as app
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: process.env.CLIENT_URL || true }));
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
@@ -45,6 +45,7 @@ connectDB().then(seedProducts).catch((error) => {
 });
 
 // server started here the app is listening to any signel send on 5001
-app.listen(5001, () => {
-  console.log('Server is running on port 5001');
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

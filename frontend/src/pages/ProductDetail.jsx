@@ -7,9 +7,8 @@ export default function ProductDetail() {
   const [product, setProduct] = useState(null);
 
   const loadProduct = async () => {
-    const response = await api.get(`/products/`);
-    const p = response.data.find((item) => item._id === id);
-    setProduct(p);
+    const response = await api.get(`/products/${id}`);
+    setProduct(response.data.product || response.data);
   };
 
   useEffect(() => {
