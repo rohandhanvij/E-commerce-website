@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../api";
+import api from "../api/axios";
 import { useNavigate, useParams } from "react-router-dom";
 
 const initialForm = {
