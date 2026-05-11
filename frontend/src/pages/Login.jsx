@@ -7,7 +7,7 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const [msg, setMsg] = useState("");
+  const [msg, setMsg] = useState(null);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,12 +20,21 @@ export default function Login() {
       const res = await api.post("/auth/login", form);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userId", res.data.user._id);
-      setMsg("Login successful!");
+      setMsg({ type: "success", text: "✓ Login successful!" });
       setTimeout(() => {
         navigate("/");
       }, 500);
     } catch (error) {
-      setMsg(error?.response?.data?.message || "Login failed");
+      const errorMessage = error?.response?.data?.message || "Login failed";
+      let suggestion = "";
+      
+      if (errorMessage.includes("Invalid credentials")) {
+        suggestion = "Check your email and password, then try again.";
+      } else if (errorMessage.includes("Server error")) {
+        suggestion = "Please try again later.";
+      }
+      
+      setMsg({ type: "error", text: errorMessage, suggestion });
     }
   };
 
@@ -33,7 +42,18 @@ export default function Login() {
     <div className="flex items-center justify-center h-screen bg-gray-100 px-4 py-6 sm:px-6 lg:px-8">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Login to Your Account</h2>
-        {msg && <p className="text-red-500 mb-4 text-center">{msg}</p>}
+        {msg && (
+          <div className={`mb-4 p-3 rounded-md ${msg.type === "success" ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"}`}>
+            <p className={msg.type === "success" ? "text-green-700 font-medium" : "text-red-700 font-medium"}>
+              {msg.text}
+            </p>
+            {msg.suggestion && (
+              <p className={`text-sm mt-2 ${msg.type === "success" ? "text-green-600" : "text-red-600"}`}>
+                💡 {msg.suggestion}
+              </p>
+            )}
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="space-y-6">
           <input
             type="email"
